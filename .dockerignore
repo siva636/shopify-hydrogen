@@ -1,0 +1,9 @@
+.react-router
+build
+node_modules
+.git
+.cursor
+dist
+README.md
+CHANGELOG.md
+

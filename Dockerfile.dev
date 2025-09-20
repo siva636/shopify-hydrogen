@@ -8,15 +8,8 @@ RUN apt-get update && \
   --no-install-recommends && \
   rm -rf /var/lib/apt/lists/*
 
-COPY package*.json ./
-
-RUN npm i
-RUN npm ci
-
-COPY . .
-
 RUN npm install -g @shopify/cli
 
 EXPOSE 3000
 
-CMD ["shopify", "hydrogen", "dev", "--codegen", "--host"]
+CMD ["/bin/bash"]
