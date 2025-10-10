@@ -4,14 +4,13 @@ export default function Index() {
   return (
     <>
       <h1>
-        Hydrogen Express Example</h1>
+        Shopify Hydrogen headless storefront hosted on Vercel
+      </h1>
       <p>
         This example shows how to use Hydrogen with Express.js for Node.js
         deployments instead of Oxygen/Workers.
       </p>
-      <p>
-        <Link to="/products/the-carbon">View Example Product</Link>
-      </p>
+
     </>
   );
 }
