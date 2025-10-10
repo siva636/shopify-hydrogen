@@ -1,9 +1,10 @@
-import {useRouteError, isRouteErrorResponse, Link} from 'react-router';
+import { useRouteError, isRouteErrorResponse, Link } from 'react-router';
 
 export default function Index() {
   return (
     <>
-      <h1>Hydrogen Express Example</h1>
+      <h1>
+        Hydrogen Express Example</h1>
       <p>
         This example shows how to use Hydrogen with Express.js for Node.js
         deployments instead of Oxygen/Workers.
