@@ -1,3 +1,18 @@
+// Ensure environment variables are loaded.
+import { config } from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Convert current module URL to directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables from the .env file in the root directory.
+// This must happen before any application code attempts to access process.env.
+// The production check (NODE_ENV=production) ensures this is the final step.
+config({ path: path.resolve(__dirname, '.env') });
+
+
 import {createRequestHandler} from '@react-router/express';
 import {createCookieSessionStorage} from 'react-router';
 import compression from 'compression';
