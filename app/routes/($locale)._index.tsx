@@ -80,11 +80,23 @@ function FeaturedCollection({
     >
       {image && (
         <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
+          <div className="relative flex justify-center items-center">
+            <Image data={image} sizes="100vw" />
+            <div className="absolute text-center">
+              <div className="text-5xl md:text-7xl lg:text-8xl lg:font-bold text-white text-center">
+                <div>Elevate your lifestyle today.</div>
+                <div>Tomorrow means never.</div>
+              </div>
+              <button className="m-6 bg-white text-black py-4 px-8 text-2xl font-bold tracking-wide border-2 border-black rounded-lg ransition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg cursor-pointer">
+                Elevate now
+              </button>
+            </div>
+          </div>
         </div>
-      )}
+      )
+      }
       {/* <h1>{collection.title}</h1> */}
-    </Link>
+    </Link >
   );
 }
 
