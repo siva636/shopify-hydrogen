@@ -45,7 +45,7 @@ COPY --from=build-env /app/build /app/build
 WORKDIR /app
 
 # Expose the default port for Shopify Hydrogen (usually 8080)
-EXPOSE 3000
+EXPOSE 8080
 
 # The command to start the application
 CMD ["npm", "run", "start"]

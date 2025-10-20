@@ -13,19 +13,19 @@ const __dirname = path.dirname(__filename);
 config({ path: path.resolve(__dirname, '.env') });
 
 
-import {createRequestHandler} from '@react-router/express';
-import {createCookieSessionStorage} from 'react-router';
+import { createRequestHandler } from '@react-router/express';
+import { createCookieSessionStorage } from 'react-router';
 import compression from 'compression';
 import express from 'express';
 import morgan from 'morgan';
-import {createHydrogenContext, InMemoryCache} from '@shopify/hydrogen';
+import { createHydrogenContext, InMemoryCache } from '@shopify/hydrogen';
 
 // Don't capture process.env too early - it needs to be accessed after dotenv loads
 const getEnv = () => process.env;
 
 let vite;
 if (process.env.NODE_ENV !== 'production') {
-  const {createServer} = await import('vite');
+  const { createServer } = await import('vite');
   vite = await createServer({
     server: {
       middlewareMode: true,
@@ -50,10 +50,10 @@ if (vite) {
   app.use(morgan('tiny'));
   app.use(
     '/assets',
-    express.static('build/client/assets', {immutable: true, maxAge: '1y'}),
+    express.static('build/client/assets', { immutable: true, maxAge: '1y' }),
   );
 }
-app.use(express.static('build/client', {maxAge: '1h'}));
+app.use(express.static('build/client', { maxAge: '1h' }));
 
 // Create the request handler
 app.all('*', async (req, res, next) => {
@@ -72,7 +72,7 @@ app.all('*', async (req, res, next) => {
   return handler(req, res, next);
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 const server = app.listen(port, () => {
   console.log(`Express server listening on port ${port}`);
@@ -106,7 +106,7 @@ async function getContext(req) {
       cache: new InMemoryCache(),
       waitUntil: null, // Not applicable in Node.js
       session,
-      i18n: {language: 'EN', country: 'US'},
+      i18n: { language: 'EN', country: 'US' },
       cart: {
         // Add a customt cart fragment if needed
         queryFragment: CUSTOM_CART_QUERY,
