@@ -1,12 +1,13 @@
-import {Suspense} from 'react';
-import {Await, NavLink, useAsyncValue} from 'react-router';
+import { Suspense } from 'react';
+import { Await, NavLink, useAsyncValue } from 'react-router';
 import {
   type CartViewPayload,
   useAnalytics,
   useOptimisticCart,
 } from '@shopify/hydrogen';
-import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
-import {useAside} from '~/components/Aside';
+import type { HeaderQuery, CartApiQueryFragment } from 'storefrontapi.generated';
+import { useAside } from '~/components/Aside';
+import { MagnifyingGlassIcon, ShoppingBagIcon, UserIcon, UserPlusIcon } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -23,7 +24,7 @@ export function Header({
   cart,
   publicStoreDomain,
 }: HeaderProps) {
-  const {shop, menu} = header;
+  const { shop, menu } = header;
   return (
     <header className="header">
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
@@ -52,7 +53,7 @@ export function HeaderMenu({
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
   const className = `header-menu-${viewport}`;
-  const {close} = useAside();
+  const { close } = useAside();
 
   return (
     <nav className={className} role="navigation">
@@ -73,8 +74,8 @@ export function HeaderMenu({
         // if the url is internal, we strip the domain
         const url =
           item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
+            item.url.includes(publicStoreDomain) ||
+            item.url.includes(primaryDomainUrl)
             ? new URL(item.url).pathname
             : item.url;
         return (
@@ -105,7 +106,7 @@ function HeaderCtas({
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
+            {(isLoggedIn) => (isLoggedIn ? < UserAvatar /> : <UserIcon className="size-6" />)}
           </Await>
         </Suspense>
       </NavLink>
@@ -116,7 +117,7 @@ function HeaderCtas({
 }
 
 function HeaderMenuMobileToggle() {
-  const {open} = useAside();
+  const { open } = useAside();
   return (
     <button
       className="header-menu-mobile-toggle reset"
@@ -128,17 +129,17 @@ function HeaderMenuMobileToggle() {
 }
 
 function SearchToggle() {
-  const {open} = useAside();
+  const { open } = useAside();
   return (
     <button className="reset" onClick={() => open('search')}>
-      Search
+      <MagnifyingGlassIcon className="size-6" />
     </button>
   );
 }
 
-function CartBadge({count}: {count: number | null}) {
-  const {open} = useAside();
-  const {publish, shop, cart, prevCart} = useAnalytics();
+function CartBadge({ count }: { count: number | null }) {
+  const { open } = useAside();
+  const { publish, shop, cart, prevCart } = useAnalytics();
 
   return (
     <a
@@ -154,12 +155,13 @@ function CartBadge({count}: {count: number | null}) {
         } as CartViewPayload);
       }}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      {/* Cart {count === null ? <span>&nbsp;</span> : count} */}
+      {ShoppingBagIconWithBadge(count)}
     </a>
   );
 }
 
-function CartToggle({cart}: Pick<HeaderProps, 'cart'>) {
+function CartToggle({ cart }: Pick<HeaderProps, 'cart'>) {
   return (
     <Suspense fallback={<CartBadge count={null} />}>
       <Await resolve={cart}>
@@ -229,3 +231,20 @@ function activeLinkStyle({
     color: isPending ? 'grey' : 'black',
   };
 }
+
+function ShoppingBagIconWithBadge(count: number | null) {
+  return <div className="relative inline-flex">
+    <ShoppingBagIcon className="size-6" />
+    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+      {count}
+    </span>
+  </div>
+}
+
+function UserAvatar() {
+  // TODO: Replace UserIcon with an avatar showing user image or first letter of the name
+  return < UserIcon className="size-6" />
+}
+
+
+
