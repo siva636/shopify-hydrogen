@@ -60,6 +60,9 @@ a {
 a:hover {
   text-decoration: underline;
   cursor: pointer;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+  text-decoration-skip-ink: auto;
 }
 
 hr {
@@ -78,12 +81,13 @@ body {
   min-height: 100vh;
 }
 
-body > main {
+body>main {
   margin: 0 1rem 1rem 1rem;
 }
 
 section {
   padding: 1rem 0;
+
   @media (min-width: 768px) {
     padding: 2rem 0;
   }
@@ -98,6 +102,7 @@ fieldset {
 
 form {
   max-width: 100%;
+
   @media (min-width: 768px) {
     max-width: 400px;
   }

@@ -7,7 +7,7 @@ import {
 } from '@shopify/hydrogen';
 import type { HeaderQuery, CartApiQueryFragment } from 'storefrontapi.generated';
 import { useAside } from '~/components/Aside';
-import { MagnifyingGlassIcon, ShoppingBagIcon, UserIcon, UserPlusIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, UserIcon, UserPlusIcon } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -120,10 +120,10 @@ function HeaderMenuMobileToggle() {
   const { open } = useAside();
   return (
     <button
-      className="header-menu-mobile-toggle reset"
+      className="header-menu-mobile-toggle reset bg-red-500"
       onClick={() => open('mobile')}
     >
-      <h3>☰</h3>
+      <Bars3Icon className='size-6' />
     </button>
   );
 }
