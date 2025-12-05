@@ -1,10 +1,10 @@
-import {PassThrough} from 'node:stream';
-import type {EntryContext} from 'react-router';
-import {createReadableStreamFromReadable} from '@react-router/node';
-import {ServerRouter} from 'react-router';
-import {isbot} from 'isbot';
-import type {RenderToPipeableStreamOptions} from 'react-dom/server';
-import {renderToPipeableStream} from 'react-dom/server';
+import { PassThrough } from 'node:stream';
+import type { EntryContext } from 'react-router';
+import { createReadableStreamFromReadable } from '@react-router/node';
+import { ServerRouter } from 'react-router';
+import { isbot } from 'isbot';
+import type { RenderToPipeableStreamOptions } from 'react-dom/server';
+import { renderToPipeableStream } from 'react-dom/server';
 import {
   createContentSecurityPolicy,
   type HydrogenRouterContextProvider,
@@ -20,7 +20,17 @@ export default function handleRequest(
   context: HydrogenRouterContextProvider,
 ) {
   return new Promise((resolve, reject) => {
-    const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+    const { nonce, header, NonceProvider } = createContentSecurityPolicy({
+      styleSrc: [
+        'self',
+        'https://cdn.shopify.com',
+        'https://fonts.googleapis.com',
+      ],
+      fontSrc: [
+        'self',
+        'https://cdn.shopify.com',
+        'https://fonts.gstatic.com',
+      ],
       shop: {
         checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
         storeDomain: context.env.PUBLIC_STORE_DOMAIN,
@@ -33,7 +43,7 @@ export default function handleRequest(
     const readyOption: keyof RenderToPipeableStreamOptions =
       userAgent && isbot(userAgent) ? 'onAllReady' : 'onShellReady';
 
-    const {pipe, abort} = renderToPipeableStream(
+    const { pipe, abort } = renderToPipeableStream(
       <NonceProvider>
         <ServerRouter
           context={reactRouterContext}
