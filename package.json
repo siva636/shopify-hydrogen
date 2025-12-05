@@ -13,7 +13,6 @@
     "codegen": "shopify hydrogen codegen && react-router typegen"
   },
   "dependencies": {
-    "@heroicons/react": "^2.2.0",
     "@react-router/express": "7.9.2",
     "@react-router/node": "7.9.2",
     "@remix-run/eslint-config": "^2.16.1",

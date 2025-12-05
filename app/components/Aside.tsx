@@ -1,4 +1,3 @@
-import { XMarkIcon } from '@heroicons/react/24/outline';
 import {
   createContext,
   type ReactNode,
@@ -64,7 +63,9 @@ export function Aside({
         <header>
           <h3>{heading}</h3>
           <button className="close reset" onClick={close} aria-label="Close">
-            <XMarkIcon />
+            <span className="material-symbols-outlined">
+              close
+            </span>
           </button>
         </header>
         <main>{children}</main>

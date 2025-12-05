@@ -7,7 +7,6 @@ import {
 } from '@shopify/hydrogen';
 import type { HeaderQuery, CartApiQueryFragment } from 'storefrontapi.generated';
 import { useAside } from '~/components/Aside';
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, UserIcon, UserPlusIcon } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -106,7 +105,7 @@ function HeaderCtas({
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? < UserAvatar /> : <UserIcon className="size-6" />)}
+            {(isLoggedIn) => (isLoggedIn ? < UserAvatar /> : <span className="material-symbols-outlined">person</span>)}
           </Await>
         </Suspense>
       </NavLink>
@@ -123,7 +122,7 @@ function HeaderMenuMobileToggle() {
       className="header-menu-mobile-toggle reset bg-red-500"
       onClick={() => open('mobile')}
     >
-      <Bars3Icon className='size-6' />
+      <span className="material-symbols-outlined">menu</span>
     </button>
   );
 }
@@ -132,7 +131,7 @@ function SearchToggle() {
   const { open } = useAside();
   return (
     <button className="reset" onClick={() => open('search')}>
-      <MagnifyingGlassIcon className="size-6" />
+      <span className="material-symbols-outlined">search</span>
     </button>
   );
 }
@@ -234,7 +233,7 @@ function activeLinkStyle({
 
 function ShoppingBagIconWithBadge(count: number | null) {
   return <div className="relative inline-flex">
-    <ShoppingBagIcon className="size-6" />
+    <span className="material-symbols-outlined">shopping_bag</span>
     <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
       {count}
     </span>
@@ -243,7 +242,7 @@ function ShoppingBagIconWithBadge(count: number | null) {
 
 function UserAvatar() {
   // TODO: Replace UserIcon with an avatar showing user image or first letter of the name
-  return < UserIcon className="size-6" />
+  return <span className="material-symbols-outlined">person</span>
 }
 
 

@@ -153,6 +153,7 @@ export function Layout({ children }: { children?: React.ReactNode }) {
         <link rel="stylesheet" href={tailwindCss}></link>
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&icon_names=close,menu,person,search,shopping_bag" rel="stylesheet" />
         <Meta />
         <Links />
       </head>
