@@ -1,0 +1,100 @@
+:root {
+  /* --- M3 Expressive Filled Button Design Tokens --- */
+
+  /* Color Tokens */
+  --m3-filled-button-container-color: black;
+  /* Primary Color */
+  --m3-filled-button-content-color: #FFFFFF;
+  /* On Primary Color */
+
+  /* Typography/Layout Tokens */
+  --m3-filled-button-height: 56px;
+  --m3-filled-button-padding-h: 24px;
+  /* Horizontal padding, usually 16px M3 default */
+  --m3-filled-button-icon-spacing: 8px;
+  /* Space between icon and label */
+  --m3-filled-button-font-size: 0.875rem;
+  /* M3 Label Large, 14px */
+  --m3-filled-button-font-weight: 500;
+
+  /* Shape Token (Expressive often uses slightly squared or medium corners) */
+  --m3-filled-button-corner-radius: 24px;
+
+  /* State Tokens */
+  --m3-filled-button-hover-shadow: 0 2px 4px gray;
+  --m3-filled-button-focus-ring-color: black;
+  /* Focus uses the container color */
+}
+
+/* --- Base Filled Button Style (.m3-filled-button) --- */
+.m3-filled-button {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  height: var(--m3-filled-button-height);
+  padding: 0 var(--m3-filled-button-padding-h);
+
+  /* Appearance */
+  background-color: var(--m3-filled-button-container-color);
+  color: var(--m3-filled-button-content-color);
+  border-radius: var(--m3-filled-button-corner-radius);
+  border: none;
+  cursor: pointer;
+  box-shadow: none;
+  /* Filled buttons typically have no default elevation/shadow */
+
+  /* Typography */
+  font-family: 'Roboto serif', sans-serif;
+  font-size: var(--m3-filled-button-font-size);
+  font-weight: var(--m3-filled-button-font-weight);
+  text-transform: none;
+  /* Material 3 favors sentence case */
+  letter-spacing: 0.1px;
+
+  /* Transitions */
+  transition: background-color 0.3s, box-shadow 0.3s, opacity 0.3s;
+}
+
+/* Icon (if present) */
+.m3-filled-button .m3-button__icon {
+  width: 18px;
+  /* Standard M3 icon size is often 20px, sometimes 18px for body text */
+  height: 18px;
+  margin-right: var(--m3-filled-button-icon-spacing);
+}
+
+/* --- State Styles (Expressive) --- */
+
+/* Hover State */
+.m3-filled-button:hover {
+  background-color: color-mix(in srgb, var(--m3-filled-button-container-color) 90%, #FFFFFF);
+  /* Example: Slight lightening on hover to indicate state change */
+  box-shadow: var(--m3-filled-button-hover-shadow);
+  /* Optional: Adds a subtle elevation lift */
+}
+
+/* Focus State */
+.m3-filled-button:focus-visible {
+  outline: 3px solid var(--m3-filled-button-focus-ring-color);
+  outline-offset: 1px;
+  /* Optional: Standard M3 uses a focus ring aligned to the button container */
+}
+
+/* Pressed/Active State */
+.m3-filled-button:active {
+  background-color: color-mix(in srgb, var(--m3-filled-button-container-color) 80%, #000000);
+  /* Example: Slight darkening to simulate press */
+  box-shadow: none;
+}
+
+/* Disabled State */
+.m3-filled-button:disabled {
+  background-color: color-mix(in srgb, var(--m3-filled-button-container-color) 12%, #000000);
+  color: color-mix(in srgb, var(--m3-filled-button-content-color) 38%, #000000);
+  opacity: 0.38;
+  /* A common opacity value for disabled M3 elements */
+  cursor: default;
+  box-shadow: none;
+}

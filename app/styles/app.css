@@ -8,6 +8,21 @@
   --header-height: 64px;
   --color-dark: #000;
   --color-light: #fff;
+
+  /* Design Tokens for FAB - Primary Container */
+  --m3-expressive-fab-primary-color: #7A3F98;
+  /* Example Primary Container Color */
+  --m3-expressive-fab-on-primary-color: #FFFFFF;
+  /* Example On Primary Color */
+  --m3-expressive-fab-shape-radius: 16px;
+  --m3-expressive-fab-elevation-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  /* Example M3 elevation 3/4 */
+  --m3-expressive-fab-focus-ring: 0 0 0 3px var(--m3-expressive-fab-on-primary-color);
+  --m3-expressive-fab-padding-h: 24px;
+  --m3-expressive-fab-icon-size: 24px;
+  --m3-expressive-fab-label-font-size: 1rem;
+  /* Adjust based on M3 Title Medium or Label Large, often 16px */
+  --m3-expressive-fab-icon-spacing: 12px;
 }
 
 img {
