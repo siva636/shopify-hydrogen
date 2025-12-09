@@ -7,6 +7,7 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import { ProductItem } from '~/components/ProductItem';
+import { M3ExtendedFabLg, M3ExtendedFabMd, M3ExtendedFabSm } from '~/components/buttons';
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: 'Hydrogen | Home' }];
@@ -87,9 +88,18 @@ function FeaturedCollection({
                 <div>Elevate your lifestyle today.</div>
                 <div>Tomorrow means never.</div>
               </div>
-              <button className="m-6 bg-white text-black py-4 px-8 text-2xl font-bold tracking-wide border-2 border-black rounded-lg ransition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg cursor-pointer">
+              {/* <button className="m-6 bg-white text-black py-4 px-8 text-2xl font-bold tracking-wide border-2 border-black rounded-lg ransition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg cursor-pointer">
                 Elevate now
-              </button>
+              </button> */}
+              <div className="md:hidden">
+                {M3ExtendedFabSm({ label: 'Elevate now', icon: 'trending_up' })}
+              </div>
+              <div className="hidden md:block lg:hidden">
+                {M3ExtendedFabMd({ label: 'Elevate now', icon: 'trending_up' })}
+              </div>
+              <div className="hidden lg:block">
+                {M3ExtendedFabLg({ label: 'Elevate now', icon: 'trending_up' })}
+              </div>
             </div>
           </div>
         </div>
