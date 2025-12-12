@@ -137,8 +137,8 @@ const CUSTOM_CART_QUERY = `#graphql
       phone
     }
     lines(first: $numCartLines) {
-      edges {
-        node {
+
+        nodes {
           id
           quantity
           attributes {
@@ -192,7 +192,7 @@ const CUSTOM_CART_QUERY = `#graphql
             }
           }
         }
-      }
+
     }
     cost {
       subtotalAmount {
