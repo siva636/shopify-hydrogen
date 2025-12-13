@@ -84,7 +84,7 @@ function FeaturedCollection({
           <div className="relative flex justify-center items-center">
             <Image data={image} sizes="100vw" />
             <div className="absolute text-center">
-              <div className="text-5xl md:text-6xl lg:text-7xl lg:font-bold text-white text-center">
+              <div className="py-2 text-5xl md:text-6xl lg:text-7xl lg:font-bold text-white text-center">
                 <div>Elevate your lifestyle today.</div>
                 <div>Tomorrow means never.</div>
               </div>
@@ -94,12 +94,12 @@ function FeaturedCollection({
               <div className="md:hidden">
                 {M3ExtendedFabSm({ label: 'Elevate now', icon: 'trending_up' })}
               </div>
-              <div className="hidden md:block lg:hidden">
+              <div className="hidden md:block">
                 {M3ExtendedFabMd({ label: 'Elevate now', icon: 'trending_up' })}
               </div>
-              <div className="hidden lg:block">
+              {/* <div className="hidden lg:block">
                 {M3ExtendedFabLg({ label: 'Elevate now', icon: 'trending_up' })}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
