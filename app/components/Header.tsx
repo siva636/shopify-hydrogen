@@ -7,6 +7,8 @@ import {
 } from '@shopify/hydrogen';
 import type { HeaderQuery, CartApiQueryFragment } from 'storefrontapi.generated';
 import { useAside } from '~/components/Aside';
+import { Button } from './ui/button';
+import { MenuIcon, SearchIcon, ShoppingBagIcon } from "lucide-react"
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -118,45 +120,21 @@ function HeaderCtas({
 function HeaderMenuMobileToggle() {
   const { open } = useAside();
   return (
-    <button
-      className="header-menu-mobile-toggle reset bg-red-500"
+    <Button variant="outline" size="icon"
+      className="header-menu-mobile-toggle"
       onClick={() => open('mobile')}
     >
-      <span className="material-symbols-outlined">menu</span>
-    </button>
+      <MenuIcon />
+    </Button>
   );
 }
 
 function SearchToggle() {
   const { open } = useAside();
   return (
-    <button className="reset" onClick={() => open('search')}>
-      <span className="material-symbols-outlined">search</span>
-    </button>
-  );
-}
-
-function CartBadge({ count }: { count: number | null }) {
-  const { open } = useAside();
-  const { publish, shop, cart, prevCart } = useAnalytics();
-
-  return (
-    <a
-      href="/cart"
-      onClick={(e) => {
-        e.preventDefault();
-        open('cart');
-        publish('cart_viewed', {
-          cart,
-          prevCart,
-          shop,
-          url: window.location.href || '',
-        } as CartViewPayload);
-      }}
-    >
-      {/* Cart {count === null ? <span>&nbsp;</span> : count} */}
-      {ShoppingBagIconWithBadge(count)}
-    </a>
+    <Button variant="outline" size="icon" onClick={() => open('search')}>
+      <SearchIcon />
+    </Button>
   );
 }
 
@@ -174,6 +152,59 @@ function CartBanner() {
   const originalCart = useAsyncValue() as CartApiQueryFragment | null;
   const cart = useOptimisticCart(originalCart);
   return <CartBadge count={cart?.totalQuantity ?? 0} />;
+}
+
+
+function CartBadge({ count }: { count: number | null }) {
+  const { open } = useAside();
+  const { publish, shop, cart, prevCart } = useAnalytics();
+
+  return (
+    <Button variant="outline" size="icon"
+
+      onClick={(e) => {
+        e.preventDefault();
+        open('cart');
+        publish('cart_viewed', {
+          cart,
+          prevCart,
+          shop,
+          url: window.location.href || '',
+        } as CartViewPayload);
+      }}
+    >
+      {/* Cart {count === null ? <span>&nbsp;</span> : count} */}
+      {ShoppingBagIconWithBadge(count)}
+    </Button>
+  );
+}
+
+function ShoppingBagIconWithBadge(count: number | null) {
+  return <div className="relative inline-flex">
+    {/* <span className="material-symbols-outlined">shopping_bag</span> */}
+    <ShoppingBagIcon />
+    {count !== null && count > 0 && <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+      {count}
+    </span>}
+  </div>
+}
+
+function activeLinkStyle({
+  isActive,
+  isPending,
+}: {
+  isActive: boolean;
+  isPending: boolean;
+}) {
+  return {
+    fontWeight: isActive ? 'bold' : undefined,
+    color: isPending ? 'grey' : 'black',
+  };
+}
+
+function UserAvatar() {
+  // TODO: Replace UserIcon with an avatar showing user image or first letter of the name
+  return <span className="material-symbols-outlined">person</span>
 }
 
 const FALLBACK_HEADER_MENU = {
@@ -218,32 +249,9 @@ const FALLBACK_HEADER_MENU = {
   ],
 };
 
-function activeLinkStyle({
-  isActive,
-  isPending,
-}: {
-  isActive: boolean;
-  isPending: boolean;
-}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
-  };
-}
 
-function ShoppingBagIconWithBadge(count: number | null) {
-  return <div className="relative inline-flex">
-    <span className="material-symbols-outlined">shopping_bag</span>
-    {count !== null && count > 0 && <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-      {count}
-    </span>}
-  </div>
-}
 
-function UserAvatar() {
-  // TODO: Replace UserIcon with an avatar showing user image or first letter of the name
-  return <span className="material-symbols-outlined">person</span>
-}
+
 
 
 

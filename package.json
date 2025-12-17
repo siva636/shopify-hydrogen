@@ -13,6 +13,7 @@
     "codegen": "shopify hydrogen codegen && react-router typegen"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
     "@react-router/express": "7.9.2",
     "@react-router/node": "7.9.2",
     "@remix-run/eslint-config": "^2.16.1",
