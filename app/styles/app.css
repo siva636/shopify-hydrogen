@@ -289,9 +289,9 @@ button.reset:hover:not(:has(> *)) {
   width: calc(var(--aside-width) - 40px);
 }
 
-.cart-line-quantity {
+/* .cart-line-quantity {
   display: flex;
-}
+} */
 
 .cart-discount {
   align-items: center;
