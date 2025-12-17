@@ -16,10 +16,6 @@ import { FOOTER_QUERY, HEADER_QUERY } from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from '~/styles/tailwind.css?url';
-import m3ExtendedFabCss from '~/styles/m3-extended-fab.css?url';
-import m3FilledButtonMdCss from '~/styles/m3-filled-button-md.css?url';
-import m3OutlinedButtonMdCss from '~/styles/m3-outlined-button-md.css?url';
-import m3IconButtonSmCss from '~/styles/m3-icon-button-sm.css?url';
 import { PageLayout } from './components/PageLayout';
 
 export type RootLoader = typeof loader;
@@ -157,11 +153,6 @@ export function Layout({ children }: { children?: React.ReactNode }) {
         <link rel="stylesheet" href={tailwindCss}></link>
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
-        <link rel="stylesheet" href={m3ExtendedFabCss}></link>
-        <link rel="stylesheet" href={m3FilledButtonMdCss}></link>
-        <link rel="stylesheet" href={m3OutlinedButtonMdCss}></link>
-        <link rel="stylesheet" href={m3IconButtonSmCss}></link>
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&icon_names=close,menu,person,progress_activity,search,shopping_bag,trending_up" rel="stylesheet" />
         <Meta />
         <Links />
       </head>

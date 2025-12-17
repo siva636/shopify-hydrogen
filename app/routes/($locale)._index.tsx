@@ -7,7 +7,8 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import { ProductItem } from '~/components/ProductItem';
-import { M3ExtendedFabLg, M3ExtendedFabMd, M3ExtendedFabSm } from '~/components/buttons';
+import { Button } from '~/components/ui/button';
+import { TrendingUpIcon } from 'lucide-react';
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: 'Hydrogen | Home' }];
@@ -92,10 +93,14 @@ function FeaturedCollection({
                 Elevate now
               </button> */}
               <div className="md:hidden">
-                {M3ExtendedFabSm({ label: 'Elevate now', icon: 'trending_up' })}
+                <Button size="lg" className='h-[56px] px-[16px] rounded-[16px]'>
+                  <TrendingUpIcon />  <span className='font-bold'>Elevate now</span>
+                </Button>
               </div>
               <div className="hidden md:block">
-                {M3ExtendedFabMd({ label: 'Elevate now', icon: 'trending_up' })}
+                <Button size="lg" className='h-[80px] px-[30px] rounded-[20px] font-bold text-xl'>
+                  <TrendingUpIcon className='m-1' />  Elevate now
+                </Button>
               </div>
               {/* <div className="hidden lg:block">
                 {M3ExtendedFabLg({ label: 'Elevate now', icon: 'trending_up' })}
