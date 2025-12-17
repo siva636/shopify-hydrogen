@@ -5,6 +5,8 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { Button } from './ui/button';
+import { XIcon } from 'lucide-react';
 
 type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 type AsideContextValue = {
@@ -61,12 +63,10 @@ export function Aside({
       <button className="close-outside" onClick={close} />
       <aside>
         <header>
-          <h3>{heading}</h3>
-          <button className="close reset" onClick={close} aria-label="Close">
-            <span className="material-symbols-outlined">
-              close
-            </span>
-          </button>
+          <h2>{heading}</h2>
+          <Button variant='outline' size='icon' onClick={close} aria-label="Close">
+            <XIcon />
+          </Button>
         </header>
         <main>{children}</main>
       </aside>
