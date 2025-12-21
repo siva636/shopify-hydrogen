@@ -256,13 +256,13 @@ button.reset:hover:not(:has(> *)) {
 */
 .cart-main {
   height: 100%;
-  max-height: calc(100vh - var(--cart-aside-summary-height));
+  max-height: calc(100vh - var(--cart-aside-summary-height) - var(--header-height) - 1rem);
   overflow-y: auto;
   width: auto;
 }
 
 .cart-main.with-discount {
-  max-height: calc(100vh - var(--cart-aside-summary-height-with-discount));
+  max-height: calc(100vh - var(--cart-aside-summary-height-with-discount) - var(--header-height) - 1rem);
 }
 
 .cart-line {
