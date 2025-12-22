@@ -71,6 +71,10 @@ export default function Collection() {
   return (
     <div className="collection">
       <h1>{collection.title}</h1>
+      {/* <h2>{collection.title}</h2>
+      <h3>{collection.title}</h3>
+      <h4>{collection.title}</h4>
+      <h5>{collection.title}</h5> */}
       {/* <p className="collection-description">{collection.description}</p> */}
       <PaginatedResourceSection<ProductItemFragment>
         connection={collection.products}

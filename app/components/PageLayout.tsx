@@ -59,7 +59,7 @@ export function PageLayout({
 
 function CartAside({ cart }: { cart: PageLayoutProps['cart'] }) {
   return (
-    <Aside type="cart" heading="CART">
+    <Aside type="cart" heading="Cart">
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await resolve={cart}>
           {(cart) => {
@@ -74,12 +74,12 @@ function CartAside({ cart }: { cart: PageLayoutProps['cart'] }) {
 function SearchAside() {
   const queriesDatalistId = useId();
   return (
-    <Aside type="search" heading="SEARCH">
+    <Aside type="search" heading="Search">
       <div className="predictive-search">
         <br />
         <SearchFormPredictive>
           {({ fetchResults, goToSearch, inputRef }) => (
-            <div className='flex items-center gap-1 pr-5'>
+            <div className='flex items-center gap-2 pr-5'>
               <Input
                 name="q"
                 onChange={fetchResults}
@@ -163,7 +163,7 @@ function MobileMenuAside({
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading="MENU">
+      <Aside type="mobile" heading="Menu">
         <HeaderMenu
           menu={header.menu}
           viewport="mobile"

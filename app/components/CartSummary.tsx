@@ -18,7 +18,7 @@ export function CartSummary({ cart, layout }: CartSummaryProps) {
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h2>Totals</h2>
+      <h3>Totals</h3>
       <dl className="cart-subtotal">
         <dt>Subtotal</dt>
         <dd>
@@ -43,7 +43,7 @@ function CartCheckoutActions({ checkoutUrl }: { checkoutUrl?: string }) {
     <div>
       <Button asChild className="my-4">
         <a href={checkoutUrl} target="_self">
-          <p className='text-white'>Continue to checkout</p>
+          <p className='text-white'>Checkout</p>
         </a>
       </Button>
       <br />
@@ -79,7 +79,7 @@ function CartDiscounts({
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div className="flex gap-1 justify-start items-center">
+        <div className="flex gap-2 justify-start items-center mb-4 pr-5">
           <Input type="text" name="discountCode" placeholder="Discount code" />
           <Button variant="outline" type="submit">Apply</Button>
         </div>
@@ -157,7 +157,7 @@ function CartGiftCard({
         saveAppliedCode={saveAppliedCode}
         fetcherKey="gift-card-add"
       >
-        <div className="flex gap-1 justify-start items-center">
+        <div className="flex gap-2 justify-start items-center pr-5">
           <Input
             type="text"
             name="giftCardCode"
