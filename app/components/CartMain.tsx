@@ -61,7 +61,7 @@ function CartEmpty({
       </p>
       <br />
       <Button asChild variant="default" >
-        <Link to="/collections/all" onClick={close} prefetch="viewport" >
+        <Link to="/collections/featuredcollection" onClick={close} prefetch="viewport" >
           <span className="text-white"> Continue shopping</span>
         </Link>
       </Button>

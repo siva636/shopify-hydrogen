@@ -79,7 +79,7 @@ function SearchAside() {
         <br />
         <SearchFormPredictive>
           {({ fetchResults, goToSearch, inputRef }) => (
-            <div className='flex items-center gap-2 pr-5'>
+            <div className='flex gap-2 pr-5 pb-5 ml-[0.25rem]'>
               <Input
                 name="q"
                 onChange={fetchResults}
@@ -90,7 +90,7 @@ function SearchAside() {
                 list={queriesDatalistId}
               />
 
-              <Button variant='outline' onClick={goToSearch}>Search</Button>
+              <Button className='mb-0.5' variant='outline' onClick={goToSearch}>Search</Button>
             </div>
           )}
         </SearchFormPredictive>

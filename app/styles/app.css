@@ -189,7 +189,7 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .header-menu-mobile-toggle {
-  @media (min-width: 48em) {
+  @media (min-width: 45em) {
     display: none;
   }
 }
@@ -325,9 +325,9 @@ button.reset:hover:not(:has(> *)) {
   margin-bottom: 2rem;
 }
 
-.predictive-search-result h5 {
+/* .predictive-search-result h5 {
   text-transform: uppercase;
-}
+} */
 
 .predictive-search-result-item {
   margin-bottom: 0.5rem;

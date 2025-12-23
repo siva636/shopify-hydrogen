@@ -41,7 +41,7 @@ function CartCheckoutActions({ checkoutUrl }: { checkoutUrl?: string }) {
 
   return (
     <div>
-      <Button asChild className="my-4">
+      <Button asChild className="mb-2 mt-1.5">
         <a href={checkoutUrl} target="_self">
           <p className='text-white'>Checkout</p>
         </a>
@@ -79,9 +79,9 @@ function CartDiscounts({
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div className="flex gap-2 justify-start items-center mb-4 pr-5">
+        <div className="flex gap-2 pr-5">
           <Input type="text" name="discountCode" placeholder="Discount code" />
-          <Button variant="outline" type="submit">Apply</Button>
+          <Button className='mb-0.5' variant="outline" type="submit" >Apply</Button>
         </div>
       </UpdateDiscountForm>
     </div>
@@ -157,7 +157,7 @@ function CartGiftCard({
         saveAppliedCode={saveAppliedCode}
         fetcherKey="gift-card-add"
       >
-        <div className="flex gap-2 justify-start items-center pr-5">
+        <div className="flex gap-2 pr-5">
           <Input
             type="text"
             name="giftCardCode"
@@ -165,7 +165,7 @@ function CartGiftCard({
             ref={giftCardCodeInput}
           />
 
-          <Button variant="outline" type="submit" disabled={giftCardAddFetcher.state !== 'idle'}>
+          <Button className='mb-0.5' variant="outline" type="submit" disabled={giftCardAddFetcher.state !== 'idle'}>
             Apply
           </Button>
         </div>

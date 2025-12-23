@@ -47,7 +47,7 @@ export default function SearchPage() {
       <h1>Search</h1>
       <SearchForm>
         {({ inputRef }) => (
-          <div className='flex items-center gap-1' >
+          <div className='flex gap-2 pb-5' >
             <Input
               defaultValue={term}
               name="q"
@@ -55,7 +55,7 @@ export default function SearchPage() {
               ref={inputRef}
               type="search"
             />
-            <Button variant='outline' type="submit">Search</Button>
+            <Button className='mb-0.5' variant='outline' type="submit">Search</Button>
           </div>
         )}
       </SearchForm>
