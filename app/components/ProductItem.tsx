@@ -35,10 +35,10 @@ export function ProductItem({
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
-      <small>
+      <h5>{product.title}</h5>
+      <div >
         <Money data={product.priceRange.minVariantPrice} />
-      </small>
+      </div>
     </Link>
   );
 }
