@@ -29,13 +29,12 @@ export async function loader(args: Route.LoaderArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({ context }: Route.LoaderArgs) {
-  const [{ collections }] = await Promise.all([
+  const [{ collection }] = await Promise.all([
     context.storefront.query(FEATURED_COLLECTION_QUERY),
     // Add other queries here, so that they are loaded in parallel
   ]);
-
   return {
-    featuredCollection: collections.nodes[0],
+    featuredCollection: collection,
   };
 }
 
@@ -71,10 +70,11 @@ export default function Homepage() {
 function FeaturedCollection({
   collection,
 }: {
-  collection: FeaturedCollectionFragment;
+  collection: any; // FeaturedCollectionFragment;
 }) {
   if (!collection) return null;
   const image = collection?.image;
+  const productImage = collection?.products?.nodes[0]?.images?.nodes[0];
   return (
     <Link
       className="featured-collection"
@@ -91,7 +91,7 @@ function FeaturedCollection({
                 <div>Tomorrow means never.</div>
               </div>
 
-              <Button variant="outline" size="lg" className='h-[65px] rounded-[20px] font-bold text-xl'>
+              <Button variant="outline" size="default" className='h-[60px] rounded-2xl font-bold text-xl'>
                 <TrendingUpIcon className='m-1' />  <span className='pr-3'> Elevate now</span>
               </Button>
 
@@ -131,9 +131,11 @@ function RecommendedProducts({
 }
 
 const FEATURED_COLLECTION_QUERY = `#graphql
-  fragment FeaturedCollection on Collection {
+  query FeaturedCollection {
+  collection(handle: "featuredcollection") {
     id
     title
+    handle
     image {
       id
       url
@@ -141,17 +143,8 @@ const FEATURED_COLLECTION_QUERY = `#graphql
       width
       height
     }
-    handle
   }
-  query FeaturedCollection($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...FeaturedCollection
-      }
-    }
-  }
-` as const;
+}` as const;
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   fragment RecommendedProduct on Product {
