@@ -74,7 +74,6 @@ function FeaturedCollection({
 }) {
   if (!collection) return null;
   const image = collection?.image;
-  const productImage = collection?.products?.nodes[0]?.images?.nodes[0];
   return (
     <Link
       className="featured-collection"
@@ -83,7 +82,7 @@ function FeaturedCollection({
       {image && (
         <div className="featured-collection-image">
           <div className="relative flex justify-center items-center">
-            <Image className='md:hidden' data={image} sizes="100vw" aspectRatio='1/1' crop='right' />
+            <Image className='md:hidden' data={image} sizes="100vw" aspectRatio='1/1' />
             <Image className='hidden md:block' data={image} sizes="100vw" />
             <div className="absolute text-center">
               <div className="py-2 text-5xl md:text-6xl lg:text-7xl lg:font-bold text-white text-center">
