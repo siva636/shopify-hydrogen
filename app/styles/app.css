@@ -413,6 +413,26 @@ button.reset:hover:not(:has(> *)) {
   margin-bottom: 2rem;
 }
 
+.collection-item {
+  border: 1px solid lightgray;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.collection-item h5 {
+  padding: 0 1rem;
+}
+
+.collection-item p {
+  padding: 0 1rem 1rem 1rem;
+}
+
+.collection-item:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  border: 1px solid gray;
+}
+
 .collection-item img {
   height: auto;
 }
@@ -436,6 +456,18 @@ button.reset:hover:not(:has(> *)) {
   grid-gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-width), 1fr));
   margin-bottom: 2rem;
+}
+
+.product-item {
+  border: 1px solid lightgray;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.product-item:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  border: 1px solid gray;
 }
 
 .product-item img {

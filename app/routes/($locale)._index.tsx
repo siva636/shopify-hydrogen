@@ -1,14 +1,14 @@
 import { Await, useLoaderData, Link } from 'react-router';
 import type { Route } from './+types/_index';
 import { Suspense } from 'react';
-import { Image } from '@shopify/hydrogen';
+import { getPaginationVariables, Image } from '@shopify/hydrogen';
 import type {
+  CollectionFragment,
   FeaturedCollectionFragment,
-  RecommendedProductsQuery,
 } from 'storefrontapi.generated';
-import { ProductItem } from '~/components/ProductItem';
 import { Button } from '~/components/ui/button';
 import { TrendingUpIcon } from 'lucide-react';
+import { PaginatedResourceSection } from '~/components/PaginatedResourceSection';
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: 'Hydrogen | Home' }];
@@ -17,10 +17,8 @@ export const meta: Route.MetaFunction = () => {
 export async function loader(args: Route.LoaderArgs) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   return { ...deferredData, ...criticalData };
 }
 
@@ -43,18 +41,14 @@ async function loadCriticalData({ context }: Route.LoaderArgs) {
  * fetched after the initial page load. If it's unavailable, the page should still 200.
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
-function loadDeferredData({ context }: Route.LoaderArgs) {
-  const recommendedProducts = context.storefront
-    .query(RECOMMENDED_PRODUCTS_QUERY)
-    .catch((error: Error) => {
-      // Log query errors, but don't throw them so the page can still render
-      console.error(error);
-      return null;
-    });
-
-  return {
-    recommendedProducts,
-  };
+function loadDeferredData({ context, request }: Route.LoaderArgs) {
+  const paginationVariables = getPaginationVariables(request, {
+    pageBy: 4,
+  });
+  const collections = context.storefront.query(COLLECTIONS_QUERY, {
+    variables: paginationVariables,
+  });
+  return { collections };
 }
 
 export default function Homepage() {
@@ -62,7 +56,7 @@ export default function Homepage() {
   return (
     <div className="flex flex-col gap-12">
       <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
+      <Collections />
     </div>
   );
 }
@@ -103,29 +97,61 @@ function FeaturedCollection({
   );
 }
 
-function RecommendedProducts({
-  products,
-}: {
-  products: Promise<RecommendedProductsQuery | null>;
-}) {
+
+export function Collections() {
+  const { collections } = useLoaderData<typeof loader>();
+  console.log('collections', collections);
   return (
-    <div className="recommended-products">
-      <h2>Recommended for you</h2>
+    <div className="collections">
+      <h1>Collections</h1>
       <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
+        <Await resolve={collections}>
           {(response) => (
-            <div className="recommended-products-grid">
-              {response
-                ? response.products.nodes.map((product) => (
-                  <ProductItem key={product.id} product={product} />
-                ))
-                : null}
-            </div>
+            <PaginatedResourceSection<CollectionFragment>
+              connection={response.collections}
+              resourcesClassName="collections-grid"
+            >
+              {({ node: collection, index }) => (
+                <CollectionItem
+                  key={collection.id}
+                  collection={collection}
+                  index={index}
+                />
+              )}
+            </PaginatedResourceSection>
           )}
         </Await>
       </Suspense>
-      <br />
     </div>
+  );
+}
+
+function CollectionItem({
+  collection,
+  index,
+}: {
+  collection: CollectionFragment;
+  index: number;
+}) {
+  return (
+    <Link
+      className="collection-item"
+      key={collection.id}
+      to={`/collections/${collection.handle}`}
+      prefetch="intent"
+    >
+      {collection?.image && (
+        <Image
+          alt={collection.image.altText || collection.title}
+          aspectRatio="1/1"
+          data={collection.image}
+          loading={index < 3 ? 'eager' : undefined}
+          sizes="(min-width: 45em) 400px, 100vw"
+        />
+      )}
+      <h5>{collection.title}</h5>
+      <p>{collection.description}</p>
+    </Link>
   );
 }
 
@@ -145,18 +171,13 @@ const FEATURED_COLLECTION_QUERY = `#graphql
   }
 }` as const;
 
-const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  fragment RecommendedProduct on Product {
+const COLLECTIONS_QUERY = `#graphql
+  fragment Collection on Collection {
     id
     title
+    description
     handle
-    priceRange {
-      minVariantPrice {
-        amount
-        currencyCode
-      }
-    }
-    featuredImage {
+    image {
       id
       url
       altText
@@ -164,12 +185,33 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
       height
     }
   }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    products(first: 8, sortKey: UPDATED_AT, reverse: true) {
+  query StoreCollections(
+    $country: CountryCode
+    $endCursor: String
+    $first: Int
+    $language: LanguageCode
+    $last: Int
+    $startCursor: String
+  ) @inContext(country: $country, language: $language) {
+    collections(
+      first: $first,
+      last: $last,
+      before: $startCursor,
+      after: $endCursor
+    ) {
       nodes {
-        ...RecommendedProduct
+        ...Collection
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
 ` as const;
+
+
+
+
