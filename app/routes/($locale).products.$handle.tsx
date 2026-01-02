@@ -1,5 +1,5 @@
-import { Await, redirect, useLoaderData } from 'react-router';
-import type { Route } from './+types/products.$handle';
+import { Await, redirect, useLoaderData } from "react-router";
+import type { Route } from "./+types/products.$handle";
 import {
   getSelectedProductOptions,
   Analytics,
@@ -7,20 +7,23 @@ import {
   getProductOptions,
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
-} from '@shopify/hydrogen';
-import { ProductPrice } from '~/components/ProductPrice';
-import { ProductImage } from '~/components/ProductImage';
-import { ProductForm } from '~/components/ProductForm';
-import { redirectIfHandleIsLocalized } from '~/lib/redirect';
-import type { RecommendedProductsQuery } from 'storefrontapi.generated';
-import { Suspense } from 'react';
-import { ProductItem } from '~/components/ProductItem';
+} from "@shopify/hydrogen";
+import { ProductPrice } from "~/components/ProductPrice";
+import { ProductImage } from "~/components/ProductImage";
+import { ProductForm } from "~/components/ProductForm";
+import { redirectIfHandleIsLocalized } from "~/lib/redirect";
+import type {
+  RecommendedProductFragment,
+  RecommendedProductsQuery,
+} from "storefrontapi.generated";
+import { Suspense } from "react";
+import { ProductItem } from "~/components/ProductItem";
 
 export const meta: Route.MetaFunction = ({ data }) => {
   return [
-    { title: `Hydrogen | ${data?.product.title ?? ''}` },
+    { title: `Hydrogen | ${data?.product.title ?? ""}` },
     {
-      rel: 'canonical',
+      rel: "canonical",
       href: `/products/${data?.product.handle}`,
     },
   ];
@@ -40,17 +43,24 @@ export async function loader(args: Route.LoaderArgs) {
  * Load data necessary for rendering content above the fold. This is the critical data
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
-async function loadCriticalData({ context, params, request }: Route.LoaderArgs) {
+async function loadCriticalData({
+  context,
+  params,
+  request,
+}: Route.LoaderArgs) {
   const { handle } = params;
   const { storefront } = context;
 
   if (!handle) {
-    throw new Error('Expected product handle to be defined');
+    throw new Error("Expected product handle to be defined");
   }
 
   const [{ product }] = await Promise.all([
     storefront.query(PRODUCT_QUERY, {
-      variables: { handle, selectedOptions: getSelectedProductOptions(request) },
+      variables: {
+        handle,
+        selectedOptions: getSelectedProductOptions(request),
+      },
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
@@ -77,7 +87,7 @@ function loadDeferredData({ context, params }: Route.LoaderArgs) {
   // For example: product reviews, product recommendations, social feeds.
 
   const recommendedProducts = context.storefront
-    .query(RECOMMENDED_PRODUCTS_QUERY)
+    .query(RECOMMENDED_PRODUCTS_QUERY, { variables: { handle: params.handle } })
     .catch((error: Error) => {
       // Log query errors, but don't throw them so the page can still render
       console.error(error);
@@ -140,10 +150,10 @@ export default function Product() {
               {
                 id: product.id,
                 title: product.title,
-                price: selectedVariant?.price.amount || '0',
+                price: selectedVariant?.price.amount || "0",
                 vendor: product.vendor,
-                variantId: selectedVariant?.id || '',
-                variantTitle: selectedVariant?.title || '',
+                variantId: selectedVariant?.id || "",
+                variantTitle: selectedVariant?.title || "",
                 quantity: 1,
               },
             ],
@@ -152,9 +162,7 @@ export default function Product() {
       </div>
       <RecommendedProducts products={recommendedProducts} />
     </div>
-
   );
-
 }
 
 function RecommendedProducts({
@@ -170,9 +178,11 @@ function RecommendedProducts({
           {(response) => (
             <div className="recommended-products-grid">
               {response
-                ? response.products.nodes.map((product) => (
-                  <ProductItem key={product.id} product={product} />
-                ))
+                ? response.productRecommendations
+                    ?.slice(0, 3)
+                    .map((product: RecommendedProductFragment) => (
+                      <ProductItem key={product.id} product={product} />
+                    ))
                 : null}
             </div>
           )}
@@ -182,8 +192,6 @@ function RecommendedProducts({
     </div>
   );
 }
-
-
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql
   fragment ProductVariant on ProductVariant {
@@ -296,13 +304,10 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
       height
     }
   }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
+  query RecommendedProducts ($country: CountryCode, $language: LanguageCode, $handle: String!)
     @inContext(country: $country, language: $language) {
-    products(first: 5, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
+    productRecommendations(productHandle: $handle) {
         ...RecommendedProduct
       }
-    }
   }
 ` as const;
-
