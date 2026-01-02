@@ -1,17 +1,17 @@
-import { Await, useLoaderData, Link } from 'react-router';
-import type { Route } from './+types/_index';
-import { Suspense } from 'react';
-import { getPaginationVariables, Image } from '@shopify/hydrogen';
+import { Await, useLoaderData, Link } from "react-router";
+import type { Route } from "./+types/_index";
+import { Suspense } from "react";
+import { getPaginationVariables, Image } from "@shopify/hydrogen";
 import type {
-  CollectionFragment,
   FeaturedCollectionFragment,
-} from 'storefrontapi.generated';
-import { Button } from '~/components/ui/button';
-import { TrendingUpIcon } from 'lucide-react';
-import { PaginatedResourceSection } from '~/components/PaginatedResourceSection';
+  HomeCollectionFragment,
+} from "storefrontapi.generated";
+import { Button } from "~/components/ui/button";
+import { TrendingUpIcon } from "lucide-react";
+import { PaginatedResourceSection } from "~/components/PaginatedResourceSection";
 
 export const meta: Route.MetaFunction = () => {
-  return [{ title: 'Hydrogen | Home' }];
+  return [{ title: "Hydrogen | Home" }];
 };
 
 export async function loader(args: Route.LoaderArgs) {
@@ -28,7 +28,9 @@ export async function loader(args: Route.LoaderArgs) {
  */
 async function loadCriticalData({ context }: Route.LoaderArgs) {
   const [{ collection }] = await Promise.all([
-    context.storefront.query(FEATURED_COLLECTION_QUERY),
+    context.storefront.query(FEATURED_COLLECTION_QUERY, {
+      variables: { handle: "featuredcollection" },
+    }),
     // Add other queries here, so that they are loaded in parallel
   ]);
   return {
@@ -64,7 +66,7 @@ export default function Homepage() {
 function FeaturedCollection({
   collection,
 }: {
-  collection: any; // FeaturedCollectionFragment;
+  collection: FeaturedCollectionFragment;
 }) {
   if (!collection) return null;
   const image = collection?.image;
@@ -75,39 +77,45 @@ function FeaturedCollection({
     >
       {image && (
         <div className="featured-collection-image">
-          <div className="relative flex justify-center items-center">
-            <Image className='md:hidden' data={image} sizes="100vw" aspectRatio='1/1' />
-            <Image className='hidden md:block' data={image} sizes="100vw" />
+          <div className="relative flex items-center justify-center">
+            <Image
+              className="md:hidden"
+              data={image}
+              sizes="100vw"
+              aspectRatio="1/1"
+            />
+            <Image className="hidden md:block" data={image} sizes="100vw" />
             <div className="absolute text-center">
-              <div className="py-2 text-5xl md:text-6xl lg:text-7xl lg:font-bold text-white text-center">
+              <div className="py-2 text-center text-5xl text-white md:text-6xl lg:text-7xl lg:font-bold">
                 <div>Elevate your lifestyle today.</div>
                 <div>Tomorrow means never.</div>
               </div>
 
-              <Button variant="outline" size="default" className='h-[60px] rounded-2xl font-bold text-xl'>
-                <TrendingUpIcon className='m-1' />  <span className='pr-3'> Elevate now</span>
+              <Button
+                variant="outline"
+                size="default"
+                className="h-[60px] rounded-2xl text-xl font-bold"
+              >
+                <TrendingUpIcon className="m-1" />{" "}
+                <span className="pr-3"> Elevate now</span>
               </Button>
-
             </div>
           </div>
         </div>
-      )
-      }
-    </Link >
+      )}
+    </Link>
   );
 }
 
-
 export function Collections() {
   const { collections } = useLoaderData<typeof loader>();
-  console.log('collections', collections);
   return (
     <div className="collections">
       <h1>Collections</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={collections}>
           {(response) => (
-            <PaginatedResourceSection<CollectionFragment>
+            <PaginatedResourceSection<HomeCollectionFragment>
               connection={response.collections}
               resourcesClassName="collections-grid"
             >
@@ -130,7 +138,7 @@ function CollectionItem({
   collection,
   index,
 }: {
-  collection: CollectionFragment;
+  collection: HomeCollectionFragment;
   index: number;
 }) {
   return (
@@ -145,7 +153,7 @@ function CollectionItem({
           alt={collection.image.altText || collection.title}
           aspectRatio="1/1"
           data={collection.image}
-          loading={index < 3 ? 'eager' : undefined}
+          loading={index < 3 ? "eager" : undefined}
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
@@ -156,10 +164,7 @@ function CollectionItem({
 }
 
 const FEATURED_COLLECTION_QUERY = `#graphql
-  query FeaturedCollection {
-  collection(handle: "featuredcollection") {
-    id
-    title
+  fragment FeaturedCollection on Collection {
     handle
     image {
       id
@@ -169,11 +174,15 @@ const FEATURED_COLLECTION_QUERY = `#graphql
       height
     }
   }
+  query FeaturedCollection($handle: String!) {
+  collection(handle: $handle) {
+   ...FeaturedCollection
+  }
 }` as const;
 
 const COLLECTIONS_QUERY = `#graphql
-  fragment Collection on Collection {
-    id
+  fragment HomeCollection on Collection {
+     id
     title
     description
     handle
@@ -185,7 +194,7 @@ const COLLECTIONS_QUERY = `#graphql
       height
     }
   }
-  query StoreCollections(
+  query HomeCollections(
     $country: CountryCode
     $endCursor: String
     $first: Int
@@ -200,7 +209,7 @@ const COLLECTIONS_QUERY = `#graphql
       after: $endCursor
     ) {
       nodes {
-        ...Collection
+        ...HomeCollection
       }
       pageInfo {
         hasNextPage
@@ -211,7 +220,3 @@ const COLLECTIONS_QUERY = `#graphql
     }
   }
 ` as const;
-
-
-
-
