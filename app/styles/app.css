@@ -417,7 +417,7 @@ button.reset:hover:not(:has(> *)) {
   border: 1px solid lightgray;
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
-   transition: border 200ms;
+   transition: border 200ms box-shadow 200ms;
 }
 
 .collection-item h5 {
@@ -431,7 +431,7 @@ button.reset:hover:not(:has(> *)) {
 .collection-item:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-decoration: none;
-  border: 2px solid black;
+  outline: 2px solid black;
 
 }
 
@@ -464,13 +464,13 @@ button.reset:hover:not(:has(> *)) {
   border: 1px solid lightgray;
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
-  transition: border 200ms;
+  transition: border 200ms box-shadow 200ms;
 }
 
 .product-item:hover {
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-decoration: none;
-  border: 2px solid black;
+  outline: 2px solid black;
 }
 
 .product-item img {
