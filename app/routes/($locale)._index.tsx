@@ -79,12 +79,14 @@ function FeaturedCollection({
         <div className="featured-collection-image">
           <div className="relative flex items-center justify-center">
             <Image
-              className="md:hidden"
-              data={image}
-              sizes="100vw"
-              aspectRatio="1/1"
+              className="aspect-square w-full object-cover md:aspect-[4/3]"
+              data={{
+                url: image.url,
+                altText: image.altText,
+                width: 0,
+                height: 0,
+              }}
             />
-            <Image className="hidden md:block" data={image} sizes="100vw" />
             <div className="absolute text-center">
               <div className="py-2 text-center text-5xl text-white md:text-6xl lg:text-7xl lg:font-bold">
                 <div>Elevate your lifestyle today.</div>
