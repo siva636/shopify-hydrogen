@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap");
 
 :root {
   --aside-width: 400px;
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
-  --grid-item-width: 355px;
+  --grid-item-width: 275px;
   --header-height: 64px;
   --color-dark: #000;
   --color-light: #fff;
@@ -155,7 +155,7 @@ button.reset {
   font-size: inherit;
 }
 
-button.reset>* {
+button.reset > * {
   margin: 0;
 }
 
@@ -222,7 +222,7 @@ button.reset:hover:not(:has(> *)) {
   margin-left: auto;
 }
 
-.header-ctas>* {
+.header-ctas > * {
   min-width: fit-content;
 }
 
@@ -256,13 +256,18 @@ button.reset:hover:not(:has(> *)) {
 */
 .cart-main {
   height: 100%;
-  max-height: calc(100vh - var(--cart-aside-summary-height) - var(--header-height) - 1rem);
+  max-height: calc(
+    100vh - var(--cart-aside-summary-height) - var(--header-height) - 1rem
+  );
   overflow-y: auto;
   width: auto;
 }
 
 .cart-main.with-discount {
-  max-height: calc(100vh - var(--cart-aside-summary-height-with-discount) - var(--header-height) - 1rem);
+  max-height: calc(
+    100vh - var(--cart-aside-summary-height-with-discount) -
+      var(--header-height) - 1rem
+  );
 }
 
 .cart-line {
@@ -417,7 +422,7 @@ button.reset:hover:not(:has(> *)) {
   border: 1px solid lightgray;
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
-   transition: border 200ms box-shadow 200ms;
+  transition: all 300ms;
 }
 
 .collection-item h5 {
@@ -431,8 +436,8 @@ button.reset:hover:not(:has(> *)) {
 .collection-item:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-decoration: none;
-  outline: 2px solid black;
-
+  scale: 1.01;
+  /* outline: 2px solid black; */
 }
 
 .collection-item img {
@@ -464,13 +469,14 @@ button.reset:hover:not(:has(> *)) {
   border: 1px solid lightgray;
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
-  transition: border 200ms box-shadow 200ms;
+  transition: all 300ms;
 }
 
 .product-item:hover {
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-decoration: none;
-  outline: 2px solid black;
+  scale: 1.01;
+  /* outline: 2px solid black; */
 }
 
 .product-item img {
